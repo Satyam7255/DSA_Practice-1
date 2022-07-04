@@ -2,38 +2,38 @@ class Solution {
     
 public:
     vector<vector<string>>ans;
-    bool isValid(vector<string>board, int row, int col){
-        for(int i=row;i>=0;i--){
-            if(board[i][col]=='Q')
+    bool isValid(vector<string>b, int r, int c){
+        for(int i=r;i>=0;i--){
+            if(b[i][c]=='Q')
                 return false;
         }
-        for(int i =row, j= col; i>=0 && j>=0; i--, j--){
-            if(board[i][j]=='Q')
+        for(int i =r, j= c; i>=0 && j>=0; i--, j--){
+            if(b[i][j]=='Q')
                 return false;
         }
-        for(int i=row, j=col; i>=0 && j<board.size(); i--, j++){
-            if(board[i][j]=='Q')
+        for(int i=r, j=c; i>=0 && j<b.size(); i--, j++){
+            if(b[i][j]=='Q')
                 return false;
         }
         return true;
         
     }
-    void recursion(vector<string>board, int n, int row){
-        if(row == n){
-            ans.push_back(board);
+    void rec(vector<string>b, int n, int r){
+        if(r == n){
+            ans.push_back(b);
             return;
         }
         for(int i=0;i<n;i++){
-            if(isValid(board, row, i)){
-                board[row][i] = 'Q';
-                recursion(board, n, row+1);
-                board[row][i] = '.';
+            if(isValid(b, r, i)){
+                b[r][i] = 'Q';
+                rec(b, n, r+1);
+                b[r][i] = '.';
             }
         }
     }
     vector<vector<string>> solveNQueens(int n) {
-        vector<string>board(n, string(n, '.'));
-        recursion(board, n, 0);
+        vector<string>b(n, string(n, '.'));
+        rec(b, n, 0);
         return ans;
     }
 };
